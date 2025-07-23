@@ -1,0 +1,15 @@
+[profile.default]
+libs = ["lib"]
+out = "out"
+src = "src"
+
+remappings = [
+  "chainlink-brownie-contracts/=lib/chainlink-brownie-contracts/",
+  "@chainlink/contracts/=lib/chainlink-brownie-contracts/",
+  "@openzeppelin/=lib/openzeppelin-contracts/",
+  "ds-test/=lib/foundry-chainlink-toolkit/lib/forge-std/lib/ds-test/src/",
+  "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
+  "forge-std/=lib/forge-std/src/",
+]
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
