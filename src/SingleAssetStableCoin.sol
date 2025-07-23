@@ -6,8 +6,8 @@ import {Ownable} from "openzeppelin-contracts/contracts/access/Ownable.sol";
 import {ReentrancyGuard} from "openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol";
 import {SafeERC20} from "openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC20} from "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
-import {MockV3Aggregator} from
-    "../lib/foundry-chainlink-toolkit/lib/chainlink-brownie-contracts/contracts/src/v0.8/tests/MockV3Aggregator.sol";
+import {AggregatorV3Interface} from
+    "../lib/foundry-chainlink-toolkit/lib/chainlink-brownie-contracts/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract SingleAssetStableCoin is ERC20, Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
@@ -227,7 +227,7 @@ contract SingleAssetStableCoin is ERC20, Ownable, ReentrancyGuard {
      * @return USD value (in wei)
      */
     function _getUsdValue(uint256 amount) private view returns (uint256) {
-        (, int256 price,,,) = MockV3Aggregator(ETH_PRICE_FEED).latestRoundData();
+        (, int256 price,,,) = AggregatorV3Interface(ETH_PRICE_FEED).latestRoundData();
         /*
         2500 * 1e8.   and SSC is 1e18, so we need to adjust the precision
         2500 * 1e8 * 1e10 = 2500 * 1e18  but after that we also have the amount in wei, so we need to divide by 1e18
@@ -319,7 +319,7 @@ contract SingleAssetStableCoin is ERC20, Ownable, ReentrancyGuard {
      * @return ETH amount (in wei)
      */
     function getTokenAmountFromUsd(uint256 usdAmountInWei) public view returns (uint256) {
-        (, int256 price,,,) = MockV3Aggregator(ETH_PRICE_FEED).latestRoundData();
+        (, int256 price,,,) = AggregatorV3Interface(ETH_PRICE_FEED).latestRoundData();
         if (price <= 0) revert AmountMustBeMoreThanZero();
         return ((usdAmountInWei * PRECISION) / (uint256(price) * ADDITIONAL_FEED_PRECISION));
     }
