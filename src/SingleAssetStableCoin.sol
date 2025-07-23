@@ -109,7 +109,7 @@ contract SingleAssetStableCoin is ERC20, Ownable, ReentrancyGuard {
      * @param amount Amount of SSC to mint (in wei)
      * @return bool Success indicator
      */
-    function mint(address to, uint256 amount) external onlyOwner returns (bool) {
+    function mint(address to, uint256 amount) external returns (bool) {
         if (to == address(0)) revert NotZeroAddress();
         if (amount == 0) revert AmountMustBeMoreThanZero();
         _mint(to, amount);
